@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Counter</title>
+</head>
+
+<body>
+    <a class="link" href="./index.html">Go to project 1</a>
+    <div class="container">
+        <h3>Type your Message!!</h3>
+        <textarea id="textarea" placeholder="Type your Message here..."></textarea>
+        <div style="font-weight: bold;" class="charcount" id="charcount">0/200 characters</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="barline"></div>
+        </div>
+        <div class="warning" id="alert">You have exceeded the 200 characters!!</div>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url(./bg\ image.jpg);
+            background-size: cover;
+
+        }
+
+        .link {
+            position: absolute;
+            right: 100px;
+            top: 50px;
+            font-size: x-large;
+            font-family: cursive;
+            color: black;
+        }
+
+        .container {
+            background-color: rgb(240, 185, 199);
+            border: 3px solid rgb(234, 65, 178);
+            text-align: center;
+            width: 400px;
+            height: 400px;
+            border-radius: 30px;
+            padding: 10px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 270px;
+            padding: 12px;
+            border-radius: 10px;
+            border-style: none;
+            margin-top: 10px;
+            border-style: none;
+            outline: none;
+            resize: none;
+            font-size: 16px;
+        }
+
+        .warning {
+            color: #ff4d4d;
+            font-weight: bold;
+            margin-top: 8px;
+            display: none;
+
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 10px;
+            margin-left: 40px;
+            border: 1px solid gray;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.2s ease, background-color 0.2s ease;
+        }
+    </style>
+
+    <script>
+        const textarea = document.getElementById('textarea');
+        const charcount = document.getElementById('charcount');
+        const progressFill = document.getElementById('barline');
+        const warning = document.getElementById('alert');
+        const maxChars = 200;
+
+        textarea.addEventListener('input', () => {
+            let currentLength = textarea.value.length;
+
+            if (currentLength >= maxChars) {
+                textarea.value = textarea.value.substring(0, maxChars);
+                currentLength = maxChars;
+                warning.style.display = 'block';
+            }
+            else {
+                warning.style.display = 'none'
+            }
+
+            charcount.textContent = `${currentLength}/${maxChars} characters`;
+
+            //update progress bar width
+            const percentage = (currentLength / maxChars) * 100;
+            progressFill.style.width = percentage + "%";
+
+            //change progress barline color 
+            if (percentage < 50) {
+                progressFill.style.backgroundColor = '#4caf50';
+            }
+            else if (percentage < 80) {
+                progressFill.style.backgroundColor = '#ffeb3b';
+            }
+            else {
+                progressFill.style.backgroundColor = '#ff4d4d';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
